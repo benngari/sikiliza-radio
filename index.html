@@ -9,12 +9,12 @@
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
   /* ============ THEME TOKENS ============ */
-  [data-style="clean"]{
+  [data-style="clean"], [data-style="cover"]{
     --bg:#121212; --panel:#1B1B1B; --text:#F2EFEA; --muted:#8C8C88;
     --line:rgba(242,239,234,0.10); --shadow:rgba(0,0,0,0.45);
     --amber:#E8A33D; --amber-glow:rgba(232,163,61,.55); --red:#C0392B; --blue:#3C6EA5;
   }
-  [data-style="clean"][data-theme="light"]{
+  [data-style="clean"][data-theme="light"], [data-style="cover"][data-theme="light"]{
     --bg:#F5F3EF; --panel:#FFFFFF; --text:#1C1B18; --muted:#6E6B63;
     --line:rgba(28,27,24,0.10); --shadow:rgba(0,0,0,0.10);
     --amber:#C98A00; --amber-glow:rgba(201,138,0,.30); --red:#B23327; --blue:#2F5A87;
@@ -31,6 +31,18 @@
     --line:rgba(36,31,25,0.14); --shadow:rgba(60,50,30,0.22);
     --dial-bg:#2A241D; --dial-ink:#ECE3CC; --dial-tick:rgba(236,227,204,0.4);
     --chrome-hi:#ffffff; --chrome-lo:#9a978e; --ridge:rgba(0,0,0,0.035); --led-off:#cfc7ae;
+  }
+  [data-style="photo"]{
+    --bg:#121212; --panel:rgba(20,19,18,0.55); --text:#F5F2EA; --muted:#D8D3C7;
+    --line:rgba(245,242,234,0.18); --shadow:rgba(0,0,0,0.55);
+    --amber:#E8A33D; --amber-glow:rgba(232,163,61,.6); --red:#C0392B; --blue:#5C8FC7;
+    --scrim:linear-gradient(180deg, rgba(8,8,8,0.42), rgba(8,8,8,0.82));
+  }
+  [data-style="photo"][data-theme="light"]{
+    --bg:#F5F3EF; --panel:rgba(255,255,255,0.60); --text:#1C1B18; --muted:#3E3A33;
+    --line:rgba(28,27,24,0.18); --shadow:rgba(0,0,0,0.20);
+    --amber:#C9820A; --amber-glow:rgba(201,130,10,.4); --red:#B23327; --blue:#2F5A87;
+    --scrim:linear-gradient(180deg, rgba(255,252,246,0.55), rgba(255,252,246,0.88));
   }
 
   *{box-sizing:border-box;}
@@ -51,6 +63,30 @@
   [data-style="retro"] body{
     background-image:repeating-linear-gradient(180deg, var(--ridge) 0px, var(--ridge) 2px, transparent 2px, transparent 6px);
   }
+  [data-style="photo"] body{
+    background-image:var(--scrim), url('bg-personal.jpg');
+    background-size:cover;
+    background-position:center 20%;
+    background-attachment:fixed;
+    background-repeat:no-repeat;
+  }
+  [data-style="photo"] .handle,
+  [data-style="photo"] .dial-panel,
+  [data-style="photo"] .dial-glass,
+  [data-style="photo"] .card,
+  [data-style="photo"] .control-panel,
+  [data-style="photo"] .settings-panel,
+  [data-style="photo"] .sleep-menu,
+  [data-style="photo"] .pbtn,
+  [data-style="photo"] .tab,
+  [data-style="photo"] .lcd,
+  [data-style="photo"] .cp-screen,
+  [data-style="photo"] .round-btn{
+    backdrop-filter:blur(16px) saturate(130%);
+    -webkit-backdrop-filter:blur(16px) saturate(130%);
+  }
+  [data-style="photo"] .round-btn{background:var(--panel);border:1px solid var(--line);}
+  [data-style="photo"] .round-btn svg{fill:var(--text);}
   h1,h2,h3{font-family:'Oswald',sans-serif;}
   .mono{font-family:'Space Mono',monospace;}
   .wrap{max-width:1100px;margin:0 auto;padding:0 20px;}
@@ -86,18 +122,18 @@
 
   .settings-wrap{position:relative;}
   .settings-panel{
-    position:absolute;top:46px;right:0;min-width:200px;
+    position:absolute;top:46px;right:0;min-width:250px;
     background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px;
     box-shadow:0 12px 28px var(--shadow);display:none;flex-direction:column;gap:12px;z-index:60;
   }
   [data-style="retro"] .settings-panel{background:var(--panel);}
   .settings-panel.show{display:flex;}
   .settings-lbl{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:6px;}
-  .settings-options{display:flex;gap:6px;}
+  .settings-options{display:flex;gap:5px;flex-wrap:wrap;}
   .opt{
-    flex:1;font-family:'Space Grotesk',sans-serif;font-size:12.5px;font-weight:600;
+    flex:1;min-width:60px;font-family:'Space Grotesk',sans-serif;font-size:11.5px;font-weight:600;
     background:var(--bg);border:1px solid var(--line);color:var(--muted);
-    padding:8px 6px;border-radius:8px;cursor:pointer;text-align:center;
+    padding:8px 5px;border-radius:8px;cursor:pointer;text-align:center;
   }
   .opt:hover{color:var(--text);}
   .opt.active{background:var(--amber);border-color:transparent;color:#181614;}
@@ -115,6 +151,24 @@
   [data-style="retro"] .dial-glass{background:var(--dial-bg);box-shadow:inset 0 2px 10px rgba(0,0,0,0.25), inset 0 0 0 3px rgba(0,0,0,0.08);}
   .dial-glass::after{content:none;}
   [data-style="retro"] .dial-glass::after{content:"";position:absolute;inset:0;background:linear-gradient(115deg, rgba(255,255,255,0.18), transparent 40%);pointer-events:none;}
+
+  [data-style="cover"] .dial-glass{
+    background-image:
+      linear-gradient(180deg, rgba(10,9,8,0.20) 0%, rgba(10,9,8,0.55) 55%, rgba(10,9,8,0.88) 100%),
+      url('cover.jpg');
+    background-size:cover;
+    background-position:center 22%;
+    min-height:440px;
+    display:flex;flex-direction:column;justify-content:flex-end;
+  }
+  [data-style="cover"] .dial-label{color:#EDE6D3;opacity:.75;}
+  [data-style="cover"] .dial-glass h1{color:#FFFFFF;text-shadow:0 2px 12px rgba(0,0,0,0.4);}
+  [data-style="cover"] .dial-glass p{color:#EDE6D3;opacity:.85;}
+  [data-style="cover"] .dial-glass p strong{color:#fff;opacity:1;}
+  [data-style="cover"] .lcd{background:rgba(10,9,8,0.55);border:1px solid rgba(255,255,255,0.16);backdrop-filter:blur(6px);}
+  [data-style="cover"] .lcd input{color:#fff;}
+  [data-style="cover"] .lcd input::placeholder{color:rgba(255,255,255,0.55);}
+  [data-style="cover"] .lcd .lcd-tag{color:rgba(255,255,255,0.55);}
 
   .dial-label{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:10px;}
   [data-style="retro"] .dial-label{color:var(--dial-ink);opacity:.65;}
@@ -269,6 +323,7 @@
         <div class="settings-options" id="styleOptions">
           <button class="opt active" data-style-opt="clean">Clean</button>
           <button class="opt" data-style-opt="retro">Retro Radio</button>
+          <button class="opt" data-style-opt="cover">Cover</button>
         </div>
       </div>
       <div>
